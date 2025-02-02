@@ -11,3 +11,15 @@
     background-color: #FF008D;
     border-color: #FF008D;
 }
+.form-control:focus {
+    border-color: #FF008D;
+}
+
+.main-form{
+    padding: 10 50;
+}
+
+.logo {
+    border-radius: 100%;
+    border: 1px solid #FF008D;
+}
