@@ -18,6 +18,9 @@
     box-shadow: 0 4px 10px rgba(255, 117, 140, 0.3);
     transition: all 0.3s ease-in-out;
     border: none;
+    width: 70%;
+    height: 100px;
+    font-size: 38px;
 }
 
 .btn-add-entry i {
@@ -40,6 +43,9 @@
     transition: all 0.3s ease-in-out;
     border: none;
     font-size: 1.2rem;
+    width: 50%;
+    height: 100px;
+    font-size: 38px;
 }
 
 .btn-calculate i {
@@ -54,11 +60,11 @@
 
 .btn-calculate:active {
     transform: scale(0.97);
-    box-shadow: 0 2px 8px rgba(37, 117, 252, 0.4);
+    /* box-shadow: 0 2px 8px rgba(37, 117, 252, 0.4); */
 }
 
 .logo {
-    max-width: 150px;
+    max-width: 270px;
     border-radius: 12px; /* Optional rounded edges */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease-in-out;
@@ -86,19 +92,6 @@
     animation: fadeInZoom 0.8s ease-in-out;
 }
 
-.form-select {
-    background-color: white;
-    border: 2px solid #ff758c; /* Purple border */
-    border-radius: 8px;
-    padding: 10px;
-    font-size: 1rem;
-    color: #333;
-    box-shadow: 0 2px 8px rgba(106, 17, 203, 0.2);
-    transition: all 0.3s ease-in-out;
-    appearance: none; /* Removes default styling */
-    position: relative;
-}
-
 /* Hover Effect */
 .form-select:hover {
     border-color: #ff758c;
@@ -117,7 +110,7 @@
     background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%236a11cb"><path d="M7 10l5 5 5-5z"/></svg>');
     background-repeat: no-repeat;
     background-position: right 12px center;
-    background-size: 16px;
+    background-size: 40px;
 }
 
 /* Dropdown Animation */
@@ -172,12 +165,14 @@
     border: 2px solid #6a11cb;
     border-radius: 8px;
     padding: 14px 10px;
-    font-size: 1rem;
+    font-size: 2rem;
     color: #333;
     box-shadow: 0 2px 8px rgba(106, 17, 203, 0.2);
     transition: all 0.3s ease-in-out;
     width: 100%;
     appearance: none;
+    height: 100px;
+    position: relative;
 }
 
 /* Focus Effect */
@@ -198,7 +193,7 @@
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     border: 2px solid rgba(255, 255, 255, 0.3);
     display: inline-block;
-    min-width: 220px;
+    min-width: 50%;
     transition: transform 0.3s ease-in-out;
 }
 
@@ -218,7 +213,7 @@
 
 /* Stylish Text */
 .total-box h2 {
-    font-size: 2rem;
+    font-size: 4rem;
     font-weight: bold;
     color: #6a11cb;
     margin: 0;
