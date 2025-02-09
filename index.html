@@ -97,8 +97,6 @@
                 7: 150   // Nail Extension Removal
             };
 
-            toggleHandsDropdown();
-
             function calculateTotal() {
                 let total = 0;
 
@@ -112,7 +110,7 @@
                     let handsMultiplier = parseInt(handsValue) || 1;
                     let artCost = (parseInt(artValue) || 0) * 20; // Each art finger costs ₹20
 
-                    handsMultiplier = (serviceValue == 4 || handsMultiplier == 5) ? 1 : handsMultiplier;
+                    handsMultiplier = (serviceValue == "4" || serviceValue == "5") ? 1 : handsMultiplier;
                     total += (servicePrice * handsMultiplier) + artCost;
                 });
 
@@ -135,16 +133,16 @@
                 }, 300);
             }
 
-            function toggleHandsDropdown() {
-                let selectedService = $(".service-dropdown").val(); // Get selected service value
+            function toggleHandsDropdown(select) {
+                let selectedService = $(select).val(); // Get selected service value
 
                 // Services that don't require the Hands dropdown
                 let hideHandsFor = ["4", "5"];
 
                 if (hideHandsFor.includes(selectedService)) {
-                    $(".hands-dropdown-container").hide(); // Hide the Hands dropdown
+                    $(select).closest('.entry').find(".hands-dropdown-container").hide(); // Hide the Hands dropdown
                 } else {
-                    $(".hands-dropdown-container").show(); // Show the Hands dropdown
+                    $(select).closest('.entry').find(".hands-dropdown-container").show(); // Show the Hands dropdown
                 }
             }
 
@@ -167,7 +165,7 @@
 
             // Run function on service dropdown change
             $(document).on("change", ".service-dropdown", function () {
-                toggleHandsDropdown();
+                toggleHandsDropdown(this);
             });
         });
     </script>
