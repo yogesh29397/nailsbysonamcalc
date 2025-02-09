@@ -1,55 +1,121 @@
 <html>
+
 <head>
-<title>Nails By Sonam Calculator</title>
-<link rel="stylesheet" href="Css/bootstrap.min.css">
-<link rel="stylesheet" href="Css/styles.css">
+    <title>Nails By Sonam Calculator</title>
+    <link rel="stylesheet" href="Css/bootstrap.min.css">
+    <link rel="stylesheet" href="Css/styles.css">
 </head>
+
 <body>
     <div class="container mt-1 text-center">
         <img src="Image/logo.jpg" alt="Logo" class="mb-4 logo" style="max-width: 150px;">
     </div>
     <form class="main-form">
-        <div class="form-group">
-            <div class="mb-3">
-                <label for="dropdown1" class="form-label">Service</label>
-                <select class="form-select form-control form-control-lg" id="dropdown1">
-                    <option value="1" selected>Gel Polish</option>
-                    <option value="2">Temporary Nail Extension</option>
-                    <option value="3">Soft Gel Nail Extension</option>
-                    <option value="4">Feet Gel Polish</option>
-                    <option value="5">Feet Nail Extension</option>
-                    <option value="6">Gel Polish Removal</option>
-                    <option value="7">Nail Extension Removal</option>
-                </select>
+        <div id="form-content">
+            <div class="entry">
+                <div class="form-group">
+                    <div class="mb-3">
+                        <label for="service" class="form-label">Service</label>
+                        <select class="form-select form-control form-control-lg" name="service">
+                            <option value="1" selected>Gel Polish</option>
+                            <option value="2">Temporary Nail Extension</option>
+                            <option value="3">Soft Gel Nail Extension</option>
+                            <option value="4">Feet Gel Polish</option>
+                            <option value="5">Feet Nail Extension</option>
+                            <option value="6">Gel Polish Removal</option>
+                            <option value="7">Nail Extension Removal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="mb-3">
+                        <label for="hands" class="form-label">Hands</label>
+                        <select class="form-select form-control form-control-lg" name="hands">
+                            <option value="1">One Hand</option>
+                            <option value="2" selected>Two Hands</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="mb-3">
+                        <label for="art" class="form-label">Art on number of fingers</label>
+                        <select class="form-select form-control form-control-lg" name="art">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-danger remove-entry">Remove</button> <!-- Remove button -->
             </div>
         </div>
-        <div class="form-group">
-            <div class="mb-3">
-                <label for="dropdown2" class="form-label">Hands</label>
-                <select class="form-select form-control form-control-lg" id="dropdown2">
-                    <option value="1">One Hand</option>
-                    <option value="2" selected>Two Hands</option>
-                </select>
-            </div>
+        <!-- Add More Button -->
+        <div class="text-center">
+            <button type="button" id="add-more" class="btn btn-success">Add new entry</button>
         </div>
-        <div class="form-group"></div>
-        <div class="mb-3">
-            <label for="dropdown3" class="form-label">Art on number of fingers</label>
-            <select class="form-select form-control form-control-lg" id="dropdown3">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-            </select>
+
+        <button type="button" class="btn btn-lg btn-primary" id="calculate">Calculate</button>
+
+        <!-- Total Price Display -->
+        <div class="text-center mt-4">
+            <h2 id="total-price" style="font-size: 32px; font-weight: bold; display: none;">Total: ₹0</h2>
         </div>
-        </div>
-        <button type="button" class="btn btn-lg btn-primary">Calculate</button>
-      </form>
+    </form>
+    <!-- jQuery added at the bottom for better performance -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script>
+
+        $(document).ready(function () {
+            // Price list for services
+            const servicePrices = {
+                1: 150,  // Gel Polish
+                2: 300, // Temporary Nail Extension
+                3: 400, // Soft Gel Nail Extension
+                4: 100,  // Feet Gel Polish
+                5: 200, // Feet Nail Extension
+                6: 100,  // Gel Polish Removal
+                7: 150   // Nail Extension Removal
+            };
+
+            let formContent = $('#form-content').html();
+            $("#add-more").click(function () {
+                $("#form-content").append(formContent);
+            });
+
+            // Remove button functionality
+            $(document).on("click", ".remove-entry", function () {
+                $(this).closest(".entry").remove(); // Remove the entry block
+            });
+
+            $("#calculate").click(function () {
+                let total = 0;
+
+                // Loop through each dropdown set
+                $(".entry").each(function () {
+                    let serviceValue = $(this).find("select[name='service']").val();
+                    let handsValue = $(this).find("select[name='hands']").val();
+                    let artValue = $(this).find("select[name='art']").val();
+
+                    let servicePrice = servicePrices[serviceValue] || 0;
+                    let handsMultiplier = parseInt(handsValue) || 1;
+                    let artCost = (parseInt(artValue) || 0) * 20; // Each art finger costs ₹20
+
+                    total += (servicePrice * handsMultiplier) + artCost;
+                });
+
+                // Display the total
+                $("#total-price").text("Total: ₹" + total).fadeIn();
+            });
+        });
+    </script>
 </body>
+
 </html>
