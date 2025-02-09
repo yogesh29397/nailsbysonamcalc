@@ -4,20 +4,23 @@
     <title>Nails By Sonam Calculator</title>
     <link rel="stylesheet" href="Css/bootstrap.min.css">
     <link rel="stylesheet" href="Css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-    <div class="container mt-1 text-center">
-        <img src="Image/logo.jpg" alt="Logo" class="mb-4 logo" style="max-width: 150px;">
+    <div class="container mt-2 text-center mb-3">
+        <img src="Image/logo.jpg" alt="Logo" class="logo">
     </div>
     <form class="main-form">
         <div id="form-content">
-            <div class="entry">
-                <div class="form-group">
-                    <div class="mb-3">
-                        <label for="service" class="form-label">Service</label>
-                        <select class="form-select form-control form-control-lg" name="service">
-                            <option value="1" selected>Gel Polish</option>
+            <div class="entry card p-3 mb-3 shadow-sm position-relative">
+                <i class="fa fa-times-circle remove-entry position-absolute m-2" aria-hidden="true"></i>
+                <div class="form-group position-relative mt-5">
+                    <div class="custom-dropdown-container mb-3">
+                        <label for="service" class="floating-label">Service</label>
+                        <select class="form-select custom-dropdown service-dropdown" name="service">
+                            <option value="" disabled selected hidden>Select a Service</option>
+                            <option value="1">Gel Polish</option>
                             <option value="2">Temporary Nail Extension</option>
                             <option value="3">Soft Gel Nail Extension</option>
                             <option value="4">Feet Gel Polish</option>
@@ -27,19 +30,21 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="mb-3">
-                        <label for="hands" class="form-label">Hands</label>
-                        <select class="form-select form-control form-control-lg" name="hands">
+                <div class="form-group position-relative hands-dropdown-container">
+                    <div class="custom-dropdown-container mb-3">
+                        <label for="hands" class="floating-label">Hands</label>
+                        <select class="form-select custom-dropdown" name="hands">
+                            <option value="" disabled selected hidden>Hands</option>
                             <option value="1">One Hand</option>
                             <option value="2" selected>Two Hands</option>
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="mb-3">
-                        <label for="art" class="form-label">Art on number of fingers</label>
-                        <select class="form-select form-control form-control-lg" name="art">
+                <div class="form-group position-relative">
+                    <div class="custom-dropdown-container">
+                        <label for="art" class="floating-label">Art on number of fingers</label>
+                        <select class="form-select custom-dropdown" name="art">
+                            <option value="0">No Art</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -53,20 +58,27 @@
                         </select>
                     </div>
                 </div>
-                <button type="button" class="btn btn-danger remove-entry">Remove</button> <!-- Remove button -->
             </div>
         </div>
+
         <!-- Add More Button -->
-        <div class="text-center">
-            <button type="button" id="add-more" class="btn btn-success">Add new entry</button>
+        <div class="text-center mt-4">
+            <button type="button" id="add-more" class="btn btn-lg btn-add-entry">
+                <i class="fa fa-plus"></i> Add New Entry
+            </button>
         </div>
 
-        <button type="button" class="btn btn-lg btn-primary" id="calculate">Calculate</button>
+        <div class="text-center mt-4">
+            <button type="button" id="calculate-button" class="btn btn-lg btn-calculate">
+                <i class="fa fa-calculator"></i> Calculate Total
+            </button>
+        </div>
 
         <!-- Total Price Display -->
-        <div class="text-center mt-4">
-            <h2 id="total-price" style="font-size: 32px; font-weight: bold; display: none;">Total: ₹0</h2>
+        <div id="total-container" class="total-box d-none">
+            <h2>Total: <span id="total-amount">0</span> ₹</h2>
         </div>
+
     </form>
     <!-- jQuery added at the bottom for better performance -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -79,23 +91,15 @@
                 1: 150,  // Gel Polish
                 2: 300, // Temporary Nail Extension
                 3: 400, // Soft Gel Nail Extension
-                4: 100,  // Feet Gel Polish
-                5: 200, // Feet Nail Extension
+                4: 200,  // Feet Gel Polish
+                5: 400, // Feet Nail Extension
                 6: 100,  // Gel Polish Removal
                 7: 150   // Nail Extension Removal
             };
 
-            let formContent = $('#form-content').html();
-            $("#add-more").click(function () {
-                $("#form-content").append(formContent);
-            });
+            toggleHandsDropdown();
 
-            // Remove button functionality
-            $(document).on("click", ".remove-entry", function () {
-                $(this).closest(".entry").remove(); // Remove the entry block
-            });
-
-            $("#calculate").click(function () {
+            function calculateTotal() {
                 let total = 0;
 
                 // Loop through each dropdown set
@@ -108,11 +112,62 @@
                     let handsMultiplier = parseInt(handsValue) || 1;
                     let artCost = (parseInt(artValue) || 0) * 20; // Each art finger costs ₹20
 
+                    handsMultiplier = (serviceValue == 4 || handsMultiplier == 5) ? 1 : handsMultiplier;
                     total += (servicePrice * handsMultiplier) + artCost;
                 });
 
-                // Display the total
-                $("#total-price").text("Total: ₹" + total).fadeIn();
+                return total;
+            }
+
+            function updateTotal() {
+                let total = calculateTotal();
+                $("#total-amount").text(total);
+                $("#total-container").removeClass("d-none").addClass("updated");
+
+                // Smooth scrolling to the total
+                $("html, body").animate({
+                    scrollTop: $("#total-container").offset().top - 20
+                }, 600);
+
+                // Remove effect after animation
+                setTimeout(() => {
+                    $("#total-container").removeClass("updated");
+                }, 300);
+            }
+
+            function toggleHandsDropdown() {
+                let selectedService = $(".service-dropdown").val(); // Get selected service value
+
+                // Services that don't require the Hands dropdown
+                let hideHandsFor = ["4", "5"];
+
+                if (hideHandsFor.includes(selectedService)) {
+                    $(".hands-dropdown-container").hide(); // Hide the Hands dropdown
+                } else {
+                    $(".hands-dropdown-container").show(); // Show the Hands dropdown
+                }
+            }
+
+            let formContent = $('#form-content').html();
+            $("#add-more").click(function () {
+                $("#form-content").append(formContent).fadeIn(300);
+            });
+
+            // Remove button functionality
+            $(document).on("click", ".remove-entry", function () {
+                $(this).closest(".entry").fadeOut(300, function () { $(this).remove(); }); // Remove the entry block
+                setTimeout(() => {
+                    updateTotal();
+                }, 350);
+            });
+
+            $("#calculate-button").click(function () {
+                updateTotal();
+            });
+
+            // Run function on service dropdown change
+            $(document).on("change", ".service-dropdown", function () {
+                toggleHandsDropdown();
             });
         });
     </script>

@@ -1,25 +1,225 @@
-.btn-primary,
-.btn-primary:hover,
-.btn-primary:visited,
-.btn-primary:focus,
-.btn-primary:active {
-    background-color: #FF008D;
-    border-color: #FF008D;
-}
-
-.btn-primary:not(:disabled):not(.disabled):active {
-    background-color: #FF008D;
-    border-color: #FF008D;
-}
-.form-control:focus {
-    border-color: #FF008D;
-}
-
 .main-form{
-    padding: 10 50;
+    padding: 10 40;
+}
+
+.remove-entry{
+    top:0;
+    right:0;
+    font-size:25px!important;
+    color:red;
+}
+
+.btn-add-entry {
+    background: linear-gradient(135deg, #ff7eb3, #ff758c);
+    color: white;
+    font-weight: bold;
+    padding: 12px 24px;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(255, 117, 140, 0.3);
+    transition: all 0.3s ease-in-out;
+    border: none;
+}
+
+.btn-add-entry i {
+    margin-right: 8px;
+}
+
+.btn-add-entry:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(255, 117, 140, 0.5);
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+}
+
+.btn-calculate {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
+    font-weight: bold;
+    padding: 14px 28px;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(37, 117, 252, 0.3);
+    transition: all 0.3s ease-in-out;
+    border: none;
+    font-size: 1.2rem;
+}
+
+.btn-calculate i {
+    margin-right: 8px;
+}
+
+.btn-calculate:hover {
+    transform: scale(1.07);
+    box-shadow: 0 6px 15px rgba(37, 117, 252, 0.5);
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
+}
+
+.btn-calculate:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 8px rgba(37, 117, 252, 0.4);
 }
 
 .logo {
-    border-radius: 100%;
-    border: 1px solid #FF008D;
+    max-width: 150px;
+    border-radius: 12px; /* Optional rounded edges */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    filter: brightness(1.1);
+}
+
+/* Animation on page load */
+@keyframes fadeInZoom {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.logo {
+    animation: fadeInZoom 0.8s ease-in-out;
+}
+
+.form-select {
+    background-color: white;
+    border: 2px solid #ff758c; /* Purple border */
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    color: #333;
+    box-shadow: 0 2px 8px rgba(106, 17, 203, 0.2);
+    transition: all 0.3s ease-in-out;
+    appearance: none; /* Removes default styling */
+    position: relative;
+}
+
+/* Hover Effect */
+.form-select:hover {
+    border-color: #ff758c;
+    box-shadow: 0 3px 10px rgba(37, 117, 252, 0.3);
+}
+
+/* Focus Effect */
+.form-select:focus {
+    outline: none;
+    border-color: #ff758c;
+    box-shadow: 0 4px 12px rgba(255, 117, 140, 0.4);
+}
+
+/* Custom Dropdown Arrow */
+.form-select {
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%236a11cb"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+}
+
+/* Dropdown Animation */
+.form-select:focus {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0.7;
+        transform: translateY(-3px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ensure container is positioned properly */
+.custom-dropdown-container {
+    position: relative;
+    width: 100%;
+}
+
+/* Floating Label Styling */
+.floating-label {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    color: #777;
+    transition: all 0.3s ease-in-out;
+    pointer-events: none;
+    background: white;
+    padding: 0 5px;
+}
+
+/* Adjust label position when dropdown is focused or has a value */
+.custom-dropdown.has-value + .floating-label,
+.custom-dropdown:focus + .floating-label {
+    top: -8px;
+    left: 10px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #6a11cb;
+}
+
+/* Dropdown Styling */
+.custom-dropdown {
+    background-color: white;
+    border: 2px solid #6a11cb;
+    border-radius: 8px;
+    padding: 14px 10px;
+    font-size: 1rem;
+    color: #333;
+    box-shadow: 0 2px 8px rgba(106, 17, 203, 0.2);
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+    appearance: none;
+}
+
+/* Focus Effect */
+.custom-dropdown:focus {
+    outline: none;
+    border-color: #ff758c;
+    box-shadow: 0 4px 12px rgba(255, 117, 140, 0.4);
+}
+
+/* Center Total Box */
+.total-box {
+    margin: 20px auto;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    display: inline-block;
+    min-width: 220px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Make it fully centered */
+#total-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Glowing Effect on Update */
+.total-box.updated {
+    transform: scale(1.1);
+    box-shadow: 0px 4px 15px rgba(255, 117, 140, 0.7);
+}
+
+/* Stylish Text */
+.total-box h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #6a11cb;
+    margin: 0;
 }
